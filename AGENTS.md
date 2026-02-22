@@ -34,10 +34,15 @@ lake build AdiabaticQuantumComputation 2>&1 | tail -40
 5. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
    git pull --rebase
-   bd sync
+   bd sync                          # exports .beads/issues.jsonl and stages it
+   git add .beads/issues.jsonl
+   git commit -m "chore: bd sync"  # commit the JSONL — required before push
    git push
-   git status  # MUST show "up to date with origin"
+   git status                       # MUST show "up to date with origin"
    ```
+   Note: `bd sync` only exports the JSONL to disk; it does NOT create a git commit.
+   The pre-push hook rejects pushes with uncommitted staged files, so the explicit
+   `git commit` step is required.
 6. **Verify** - All changes committed AND pushed
 7. **Hand off** - Provide context for next session
 
