@@ -1,13 +1,33 @@
 # AdiabaticQuantumComputation
 
-## GitHub configuration
+A Lean 4 / Mathlib formalization of results in adiabatic quantum computation, based on:
 
-To set up your new GitHub repository, follow these steps:
+> **Elementary Proof of QAOA Convergence**
+> Lennart Binkowski, Gereon Koßmann, Timo Ziegler, René Schwonnek
+> *New Journal of Physics* 26 (2024) 073001 — [arXiv:2302.04968](https://arxiv.org/abs/2302.04968)
 
-* Under your repository name, click **Settings**.
-* In the **Actions** section of the sidebar, click "General".
-* Check the box **Allow GitHub Actions to create and approve pull requests**.
-* Click the **Pages** section of the settings sidebar.
-* In the **Source** dropdown menu, select "GitHub Actions".
+## Scope
 
-After following the steps above, you can remove this section from the README file.
+The formalization covers the content of the paper up to and including **Theorem 7** (Convergence of the
+Quantum Adiabatic Algorithm) and its proof. The central research question is whether the theorem
+extends to minimization problems — i.e., whether highest energy states can be replaced by ground
+states.
+
+Key results:
+
+- Perron–Frobenius theorem for non-negative irreducible matrices (Theorem 4)
+- Convergence of the QAA via Teufel's adiabatic theorem without gap condition (Theorem 7)
+- Minimization analogue of Theorem 7 (research contribution)
+
+## Building
+
+```bash
+lake build AdiabaticQuantumComputation 2>&1 | tail -40
+```
+
+**Do not run bare `lake build`** — it rebuilds all of Mathlib (~2 hours).
+
+## Structure
+
+- `AdiabaticQuantumComputation/Basic.lean` — main source
+- `HANDOFF.md` — mathematical scope, implementation plan, and session log
