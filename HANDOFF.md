@@ -198,3 +198,21 @@ Completed `AdiabaticQuantumComputation-vm1` and `AdiabaticQuantumComputation-aa9
 
 **Next priority:** `xch` (Corollary 6) and `qmx` (P-F sorry) can proceed now. `75m` and `jjr`
 (Phase 2 definitions) are also unblocked.
+
+### 2026-02-22 — Phase 1 cont: Corollary 6
+
+Completed `AdiabaticQuantumComputation-xch`.
+
+**What was done:**
+- Added `import Mathlib.LinearAlgebra.Matrix.IsDiag` to `Irreducibility.lean`.
+- Proved `isCoordIrreducible_add_of_isDiag_left`: if `A.IsDiag` and `B` is
+  `IsCoordIrreducible`, then `A + B` is `IsCoordIrreducible`.
+- Proof: for any proper nonempty S, B-irreducibility gives `i ∉ S`, `j ∈ S`, `B i j ≠ 0`;
+  then `i ≠ j` (membership), so `A i j = 0` by `hA hij`, hence `(A+B) i j = B i j ≠ 0`.
+- Key lemma: `Matrix.IsDiag` = `Pairwise (fun i j => A i j = 0)`, so `hA hij : A i j = 0`.
+
+**Remaining open (4 issues):**
+- `qmx`: State P-F theorem as sorry
+- `75m`: Define PhaseSeparator Hamiltonian (Def 1)
+- `jjr`: Define MixerHamiltonian (Def 5)
+- `497`: Define linear interpolation H_lin(B,C)(t)

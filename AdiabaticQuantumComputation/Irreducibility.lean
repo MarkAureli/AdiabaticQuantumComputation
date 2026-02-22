@@ -1,4 +1,5 @@
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
+import Mathlib.LinearAlgebra.Matrix.IsDiag
 import AdiabaticQuantumComputation.Basic
 
 /-!
@@ -55,3 +56,22 @@ lemma Matrix.IsIrreducible.isCoordIrreducible
     {A : Matrix n n ℝ} (hA : A.IsIrreducible) :
     IsCoordIrreducible A := by
   sorry
+
+/-! ## Corollary 6 -/
+
+/-- **Corollary 6.** If `A` is diagonal and `B` is coordinate-irreducible, then `A + B`
+is coordinate-irreducible.
+
+*Proof:* For any proper nonempty `S`, irreducibility of `B` yields `i ∉ S`, `j ∈ S` with
+`B i j ≠ 0`. Since `i ∉ S` and `j ∈ S` we have `i ≠ j`, so diagonality gives `A i j = 0`,
+hence `(A + B) i j = B i j ≠ 0`. -/
+theorem isCoordIrreducible_add_of_isDiag_left
+    {n : Type*} [Fintype n] [DecidableEq n] {R : Type*} [Ring R]
+    {A B : Matrix n n R} (hA : A.IsDiag) (hB : IsCoordIrreducible B) :
+    IsCoordIrreducible (A + B) := by
+  intro S hS hSne
+  obtain ⟨i, hi, j, hj, hBij⟩ := hB S hS hSne
+  refine ⟨i, hi, j, hj, ?_⟩
+  have hij : i ≠ j := fun h => hi (h ▸ hj)
+  rw [Matrix.add_apply, hA hij, zero_add]
+  exact hBij
