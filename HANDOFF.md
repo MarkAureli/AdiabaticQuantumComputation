@@ -237,3 +237,32 @@ Completed all 4 Phase 2 issues in parallel.
 - State + sorry Adiabatic Theorem (Theorem 2)
 - State + sorry Kato analytic perturbation lemma
 - Prove Theorem 7 modulo those sorrys
+
+### 2026-02-22 — Phase 3: Theorem 7
+
+Completed all Phase 3 items in a single session.
+
+**New file:** `AdiabaticQuantumComputation/Theorem7.lean`
+
+**What was done:**
+- `optimalSubspace Sopt` — `Submodule ℂ (QSpace N)` as `span{|z⟩ | z ∈ Sopt}`.
+- `IsTopEnergyState B S ι` — ι is a nonzero feasible eigenvector of B for the largest
+  eigenvalue of B|_S.
+- `quasiAdiabaticEvol H T` — sorry'd `QSpace N →L[ℂ] QSpace N`; the ODE solution U_T(1).
+- `adiabaticTheorem` (sorry'd) — Teufel's adiabatic theorem: given C²-family H, C²-family
+  of spectral projections P, and ι ∈ ran P(0), for every ε > 0 ∃ T₀ such that
+  ‖U_T(1)|ι⟩ - P(1)(U_T(1)|ι⟩)‖ < ε for all T ≥ T₀.
+- `katoSpectralProjection` (sorry'd) — Kato [14, Thm 6.1]: for the linearInterp between
+  mixer B and phase separator C, there exists a C²-family of spectral projections P with
+  P(t)² = P(t), H(t) ∘ P(t) = μ(t) P(t), P(0)|ι⟩ = |ι⟩, ran P(1) = optimalSubspace Sopt.
+- `theorem7` — **proved** (no sorry in the proof body) modulo the above two sorry'd lemmas.
+  Proof: (1) Kato → spectral projection family; (2) adiabatic theorem → ε-T₀ bound;
+  (3) witness φ = P(1)(U_T(1)|ι⟩) lies in optimalSubspace Sopt since P(1) is a projection.
+
+**Build:** `Build completed successfully (2408 jobs)`.
+Only the 3 intended sorry's appear; `theorem7`'s proof body is sorry-free.
+
+**Now unblocked (Phase 4):**
+- Identify precise conditions for the minimization analogue of Theorem 7
+- Adapt the proof: find the right P-F-like lemma for the lowest eigenvalue
+- Prove the minimization version of Theorem 7
