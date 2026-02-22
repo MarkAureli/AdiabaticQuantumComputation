@@ -1,1 +1,3 @@
 import AdiabaticQuantumComputation.Basic
+import AdiabaticQuantumComputation.DiagonalHamiltonian
+import AdiabaticQuantumComputation.Irreducibility

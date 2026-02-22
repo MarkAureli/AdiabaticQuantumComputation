@@ -4,7 +4,9 @@
       "type": "stdio",
       "command": "uvx",
       "args": ["lean-lsp-mcp"],
-      "env": {}
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+      }
     }
   }
 }

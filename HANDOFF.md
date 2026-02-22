@@ -167,7 +167,34 @@ Completed `AdiabaticQuantumComputation-2ww` (Define BitString, computational bas
 - `AdiabaticQuantumComputation-vm1`: Define diagonal Hamiltonians and matrix representation
 - `AdiabaticQuantumComputation-aa9`: Define irreducibility for matrices (Def 3)
 
-**Next steps:** Work both `vm1` and `aa9` in parallel (they are independent). For `vm1`, a diagonal
-Hamiltonian over `QSpace N` is a `ContinuousLinearMap` (or `Matrix`) that is diagonal in the `ket`
-basis — i.e. `H (ket z) = f(z) • ket z` for some `f : BitString N → ℝ`. For `aa9`, check whether
-`Matrix.IsIrreducible` exists in Mathlib v4.28 before rolling our own.
+**Next steps:** ~~Work both `vm1` and `aa9` in parallel~~ — completed in next session.
+
+### 2026-02-22 — Phase 1 cont: diagonal Hamiltonians and irreducibility
+
+Completed `AdiabaticQuantumComputation-vm1` and `AdiabaticQuantumComputation-aa9` in parallel.
+
+**vm1 — DiagonalHamiltonian.lean:**
+- `diagonalOp f` — `QSpace N →L[ℂ] QSpace N` via `EuclideanSpace.equiv` + pointwise scaling.
+- `diagonalOp_apply` — pointwise: `(diagonalOp f v) z = f(z) * v(z)`.
+- `diagonalOp_ket` — basis action: `diagonalOp f (ket z) = f(z) • ket z`.
+- `objectiveHamiltonian f` — real-eigenvalue version: `diagonalOp (fun z => (f z : ℂ))`.
+- `IsDiagonal` predicate and instances for `diagonalOp`, `objectiveHamiltonian`.
+- Key proof pattern: `ext i; simp [diagonalOp_apply, EuclideanSpace.single_apply]; split_ifs`.
+
+**aa9 — Irreducibility.lean:**
+- `IsCoordIrreducible A` — paper's Def 3: for every proper nonempty `S`, ∃ i ∉ S, j ∈ S with A i j ≠ 0.
+- `Matrix.IsIrreducible.isCoordIrreducible` — Mathlib's P-F irreducibility implies ours (sorry).
+- Mathlib's `Matrix.IsIrreducible` (from `Mathlib.LinearAlgebra.Matrix.Irreducible.Defs`)
+  bundles non-negativity + strong connectivity; already exists and is imported.
+
+**Infrastructure fix:** Added `/opt/homebrew/bin` to PATH in `.mcp.json` so `lean_local_search` works.
+
+**Now unblocked (5 issues):**
+- `AdiabaticQuantumComputation-497`: Define linear interpolation H_lin(B,C)(t)
+- `AdiabaticQuantumComputation-75m`: Define PhaseSeparator Hamiltonian (Def 1)
+- `AdiabaticQuantumComputation-jjr`: Define MixerHamiltonian (Def 5)
+- `AdiabaticQuantumComputation-qmx`: State Perron-Frobenius theorem (Thm 4, sorry)
+- `AdiabaticQuantumComputation-xch`: Prove Corollary 6: diagonal + irreducible → irreducible
+
+**Next priority:** `xch` (Corollary 6) and `qmx` (P-F sorry) can proceed now. `75m` and `jjr`
+(Phase 2 definitions) are also unblocked.
