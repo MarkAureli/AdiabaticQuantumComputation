@@ -33,16 +33,17 @@ lake build AdiabaticQuantumComputation 2>&1 | tail -40
 4. **Update HANDOFF.md session log** - Append what was done, current state, next steps
 5. **PUSH TO REMOTE** - This is MANDATORY:
    ```bash
-   git pull --rebase
-   bd sync                          # exports .beads/issues.jsonl and stages it
-   git add .beads/issues.jsonl
-   git commit -m "chore: bd sync"  # commit the JSONL — required before push
+   bd sync                          # exports .beads/issues.jsonl to disk
+   git add .beads/issues.jsonl <all other changed files>
+   git commit -m "..."             # commit EVERYTHING before pulling
+   git pull --rebase               # rebase AFTER committing (fails on unstaged changes)
    git push
    git status                       # MUST show "up to date with origin"
    ```
    Note: `bd sync` only exports the JSONL to disk; it does NOT create a git commit.
    The pre-push hook rejects pushes with uncommitted staged files, so the explicit
-   `git commit` step is required.
+   `git commit` step is required. **`git pull --rebase` must come AFTER the commit**,
+   not before — it fails when there are unstaged changes.
 6. **Verify** - All changes committed AND pushed
 7. **Hand off** - Provide context for next session
 
