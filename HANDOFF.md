@@ -150,5 +150,24 @@ The goal is to **prove** a precise minimization analogue of Theorem 7 in Lean.
 - Created HANDOFF.md with full mathematical scope from arXiv:2302.04968
 - Identified central research question (maximization → minimization)
 
-**Next steps:** Begin Phase 1 — set up Hilbert space and irreducibility definitions. Check Mathlib
-for Perron–Frobenius.
+### 2026-02-22 — Phase 1 start: Hilbert space foundations
+
+Completed `AdiabaticQuantumComputation-2ww` (Define BitString, computational basis, N-qubit Hilbert space).
+
+**What was done:**
+- `BitString N := Fin (2^N)` — indexes the 2^N computational basis states.
+- `QSpace N := EuclideanSpace ℂ (BitString N)` — the N-qubit Hilbert space.
+- `ket z := EuclideanSpace.single z 1` — the computational basis vector `|z⟩`.
+- `orthonormal_ket` — proved via `EuclideanSpace.orthonormal_single` (one-liner).
+- `ket_norm`, `ket_inner` — proved as direct corollaries.
+- Key lesson: the inner product notation `⟪·, ·⟫_ℂ` is not parsed by Lean in theorem statements
+  without an explicit `open` or import; use `inner ℂ` directly.
+
+**Now unblocked:**
+- `AdiabaticQuantumComputation-vm1`: Define diagonal Hamiltonians and matrix representation
+- `AdiabaticQuantumComputation-aa9`: Define irreducibility for matrices (Def 3)
+
+**Next steps:** Work both `vm1` and `aa9` in parallel (they are independent). For `vm1`, a diagonal
+Hamiltonian over `QSpace N` is a `ContinuousLinearMap` (or `Matrix`) that is diagonal in the `ket`
+basis — i.e. `H (ket z) = f(z) • ket z` for some `f : BitString N → ℝ`. For `aa9`, check whether
+`Matrix.IsIrreducible` exists in Mathlib v4.28 before rolling our own.
