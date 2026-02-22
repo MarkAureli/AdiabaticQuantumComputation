@@ -1,3 +1,5 @@
 import AdiabaticQuantumComputation.Basic
 import AdiabaticQuantumComputation.DiagonalHamiltonian
 import AdiabaticQuantumComputation.Irreducibility
+import AdiabaticQuantumComputation.PerronFrobenius
+import AdiabaticQuantumComputation.QAADefinitions

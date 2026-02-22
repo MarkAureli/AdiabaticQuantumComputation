@@ -211,8 +211,29 @@ Completed `AdiabaticQuantumComputation-xch`.
   then `i ≠ j` (membership), so `A i j = 0` by `hA hij`, hence `(A+B) i j = B i j ≠ 0`.
 - Key lemma: `Matrix.IsDiag` = `Pairwise (fun i j => A i j = 0)`, so `hA hij : A i j = 0`.
 
-**Remaining open (4 issues):**
-- `qmx`: State P-F theorem as sorry
-- `75m`: Define PhaseSeparator Hamiltonian (Def 1)
-- `jjr`: Define MixerHamiltonian (Def 5)
-- `497`: Define linear interpolation H_lin(B,C)(t)
+**Remaining open:** all Phase 1 issues closed. Phase 2 completed next session.
+
+### 2026-02-22 — Phase 2: QAA Definitions
+
+Completed all 4 Phase 2 issues in parallel.
+
+**New files:**
+- `AdiabaticQuantumComputation/PerronFrobenius.lean` — Theorem 4 (sorry'd):
+  `perronFrobenius`: non-negative + `IsCoordIrreducible` → unique Perron root `ρ > 0`
+  with all-positive 1-dim eigenspace. Uses `mulVec` eigenvalue formulation.
+  Note: `λ` is a reserved keyword in Lean 4; eigenvalue variable named `μ`.
+- `AdiabaticQuantumComputation/QAADefinitions.lean` — Phase 2 definitions:
+  - `restrictionMatrix B S`: `Matrix {z // z ∈ S} {z // z ∈ S} ℝ` via `inner ℂ ... .re`
+  - `IsPhaseSeparator H S Sopt` (Def 1): `IsDiagonal H` + argmax characterization of `Sopt`
+  - `IsMixerHamiltonian B S` (Def 5): feasibility preservation + non-negativity + irreducibility
+  - `linearInterp B C t := (1 - ↑t) • B + ↑t • C` with `@[simp]` lemmas at `t = 0, 1`
+
+**Key design decisions:**
+- `IsPhaseSeparator` uses `∀ z, z ∈ Sopt ↔ z ∈ S ∧ ∀ w ∈ S, f w ≤ f z` (cleanly encodes Sopt ⊆ S)
+- `IsMixerHamiltonian` uses `inner ℂ` with `.re`/`.im` projections for real-matrix conditions
+- `linearInterp` uses `(1 - (t : ℂ)) • B + (t : ℂ) • C` (coerce ℝ → ℂ directly)
+
+**Now unblocked (Phase 3):**
+- State + sorry Adiabatic Theorem (Theorem 2)
+- State + sorry Kato analytic perturbation lemma
+- Prove Theorem 7 modulo those sorrys
