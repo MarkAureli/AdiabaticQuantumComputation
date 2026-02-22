@@ -125,9 +125,9 @@ The goal is to **prove** a precise minimization analogue of Theorem 7 in Lean.
 - [ ] Prove Theorem 7 modulo sorryed lemmas
 
 ### Phase 4 — Minimization Extension
-- [ ] Identify precise conditions under which the minimization analogue holds
-- [ ] Adapt the proof: find the right P-F-like lemma for lowest eigenvalue
-- [ ] Prove the minimization version of Theorem 7
+- [x] Identify precise conditions under which the minimization analogue holds
+- [x] Adapt the proof: find the right P-F-like lemma for lowest eigenvalue
+- [x] Prove the minimization version of Theorem 7
 
 ---
 
@@ -266,3 +266,39 @@ Only the 3 intended sorry's appear; `theorem7`'s proof body is sorry-free.
 - Identify precise conditions for the minimization analogue of Theorem 7
 - Adapt the proof: find the right P-F-like lemma for the lowest eigenvalue
 - Prove the minimization version of Theorem 7
+
+### 2026-02-22 — Phase 4: Minimization Extension
+
+Completed all Phase 4 items.
+
+**New file:** `AdiabaticQuantumComputation/Theorem7Min.lean`
+
+**Key mathematical insight:** A *minimization mixer* has **non-positive** entries on `S`
+(instead of non-negative), so `−B|_S` is a non-negative irreducible matrix. For `t ∈ [0,1)`:
+```
+−(H(t)|_S) = (1−t)(−B|_S) + t(−C|_S)
+```
+is non-negative + irreducible by Corollary 6 (`−B|_S` irreducible; `−C|_S` diagonal), so
+Perron–Frobenius gives a non-degenerate **largest** eigenvalue of `−(H(t)|_S)`, hence a
+non-degenerate **smallest** eigenvalue of `H(t)|_S`. The rest of the proof is structurally
+identical to Theorem 7.
+
+**What was done:**
+- `IsMinPhaseSeparator H S Sopt` — diagonal + `Sopt = argmin f` on `S`.
+- `IsMinMixerHamiltonian B S` — feasibility preservation + non-positive entries on `S` +
+  `IsCoordIrreducible (-(restrictionMatrix B S))`.
+- `IsBottomEnergyState B S ι` — ι is nonzero, feasible, eigenvector for the **smallest**
+  eigenvalue of `B` on `span{|z⟩ | z ∈ S}`.
+- `katoSpectralProjectionMin` (sorry'd) — Kato's theorem for the bottom eigenspace;
+  docstring explains the P-F reduction argument fully.
+- `theorem7Min` — **proved** (no sorry in the proof body). Proof reuses `adiabaticTheorem`
+  verbatim; only the Kato step is new.
+
+**Build:** `Build completed successfully (2409 jobs)`.
+Only 1 new sorry (`katoSpectralProjectionMin`); `theorem7Min` proof body is sorry-free.
+
+**All phases complete.** The project now covers:
+- Phase 1: Hilbert space foundations + diagonal Hamiltonians + irreducibility + P-F + Cor 6
+- Phase 2: QAA definitions (PhaseSeparator, MixerHamiltonian, linearInterp)
+- Phase 3: Theorem 7 (maximization, proved modulo 3 sorryed axioms)
+- Phase 4: Theorem 7 minimization analogue (proved modulo 1 new sorry)

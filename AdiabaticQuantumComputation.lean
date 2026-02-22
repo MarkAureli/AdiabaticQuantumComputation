@@ -4,3 +4,4 @@ import AdiabaticQuantumComputation.Irreducibility
 import AdiabaticQuantumComputation.PerronFrobenius
 import AdiabaticQuantumComputation.QAADefinitions
 import AdiabaticQuantumComputation.Theorem7
+import AdiabaticQuantumComputation.Theorem7Min
